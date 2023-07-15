@@ -2,10 +2,50 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-body {
-  background-color: theme(colors.light.bgPrimary);
+:root {
+  --color-rainbow-pink: #ff007f;
+  --color-rainbow-orange: #ff7600;
+  --color-rainbow-yellow: #ffd500;
+  --color-rainbow-green: #00ff88;
+  --color-rainbow-blue: #00aaff;
 }
 
-.dark-mode {
-  background-color: theme(colors.dark.bgPrimary);
+.self-taught {
+  width: 50vw;
+
+  color: transparent;
+  background: linear-gradient(
+    135deg,
+    var(--color-rainbow-pink) 30%,
+    var(--color-rainbow-orange) 30%,
+    var(--color-rainbow-orange) 31%,
+    var(--color-rainbow-yellow) 31%,
+    var(--color-rainbow-yellow) 32%,
+    var(--color-rainbow-green) 32%,
+    var(--color-rainbow-green) 33%,
+    var(--color-rainbow-blue) 33%,
+    var(--color-rainbow-blue) 34%,
+    var(--color-rainbow-pink) 35%,
+    var(--color-rainbow-pink) 100%
+  );
+  background-clip: text;
+  /* -webkit-background-clip: text; */
+
+  font-size: 10rem;
+  /* font-family: selfTaught; */
+  font-family: 'Yanone Kaffeesatz', 'sans-serif';
+  text-align: center;
+
+  background-size: 400% 100%;
+  background-position: 0 0;
+  animation: slide 3s linear 0.5s infinite;
+}
+
+@keyframes slide {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 115% 0;
+  }
 }
