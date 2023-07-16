@@ -2,4 +2,21 @@
   position: absolute;
   top: 0;
   right: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 1rem;
+  padding: 8px;
+
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background-color: var(--color-bg-primary);
+}
+
+.dark-mode-toggle:hover {
+  border-color: var(--color-fg-primary);
+  cursor: pointer;
+  background-color: var(--color-bg-secondary);
 }

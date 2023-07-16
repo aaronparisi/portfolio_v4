@@ -28,8 +28,7 @@ const Greeting: React.FC<GreetingProps> = ({ darkMode }) => {
   // typeing aniation stuff
   const thoughts: string[] = [
     'Deep in thought.',
-    'Sometimes distraught.',
-    'Overwraught.',
+    'Often distraught.',
     'Works a lot.',
   ];
   const deleteChar = () => {

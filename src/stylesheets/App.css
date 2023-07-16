@@ -9,7 +9,7 @@
 :root {
   --color-bg-primary: #f0f0f0;
   --color-bg-secondary: #cdd7d6;
-  --color-fg-primary: #000e20;
+  --color-fg-primary: #06162b;
   --color-fg-secondary: #102542;
   --color-accent-primary: #98ce00;
   --color-accent-secondary: #94bd21;
@@ -22,7 +22,7 @@
 }
 
 :root.dark-mode {
-  --color-bg-primary: #000e20;
+  --color-bg-primary: #06162b;
   --color-bg-secondary: #102542;
   --color-fg-primary: #f0f0f0;
   --color-fg-secondary: #cdd7d6;

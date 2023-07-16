@@ -17,7 +17,7 @@
 }
 
 .self-taught {
-  flex: 0 0 40%;
+  flex: 0 0 50%;
 
   color: transparent;
   background: linear-gradient(
@@ -49,7 +49,7 @@
 }
 
 .deep-thought {
-  flex: 0 0 60%;
+  flex: 0 0 50%;
   color: lime;
   font-family: 'Victor Mono', 'monospace';
   font-size: 4rem;
