@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useSpring, animated } from 'react-spring';
+
+import '../stylesheets/greeting.css';
 
 interface GreetingProps {
   darkMode: boolean;
@@ -8,14 +11,27 @@ const Greeting: React.FC<GreetingProps> = ({ darkMode }) => {
   const [charIdx, setCharIdx] = useState<number>(-1);
   const [thoughtIdx, setThoughtIdx] = useState<number>(0);
   const [typing, setTyping] = useState<boolean>(true);
+  const [isSubtitleHovered, setIsSubtitleHovered] = useState<boolean>(false);
 
+  // subtitle transition stuff
+  const springProps = useSpring({
+    transform: isSubtitleHovered ? 'translate(0%, -115%)' : 'translate(0%, 0%)',
+    config: { mass: 1, friction: 15, tension: 170 },
+  });
+  const handleSubtitleMouseEnter = () => {
+    setIsSubtitleHovered(true);
+  };
+  const handleSubtitleMouseLeave = () => {
+    setIsSubtitleHovered(false);
+  };
+
+  // typeing aniation stuff
   const thoughts: string[] = [
     'Deep in thought.',
     'Sometimes distraught.',
     'Overwraught.',
     'Works a lot.',
   ];
-
   const deleteChar = () => {
     if (charIdx <= -1) {
       setThoughtIdx((prev) => (prev + 1) % thoughts.length);
@@ -26,7 +42,9 @@ const Greeting: React.FC<GreetingProps> = ({ darkMode }) => {
   };
   const typeChar = () => {
     if (charIdx >= thoughts[thoughtIdx].length) {
-      setTyping(false);
+      setTimeout(() => {
+        setTyping(false);
+      }, 2000);
     } else {
       setCharIdx((prev) => prev + 1);
     }
@@ -38,25 +56,40 @@ const Greeting: React.FC<GreetingProps> = ({ darkMode }) => {
       } else {
         deleteChar();
       }
-    }, Math.floor(Math.random() * 200) + 20);
+    }, Math.floor(Math.random() * 100) + 20);
   }, [typing, charIdx]);
 
   return (
     <section className="greeting">
-      <div
-        className={`
+      <section className="greeting-taglines">
+        <div
+          className={`
           self-taught
         `}
-      >
-        Self-taught.
-      </div>
-      <div
-        className={`
+        >
+          Self-taught.
+        </div>
+        <div
+          className={`
           deep-thought
         `}
-      >
-        {thoughts[thoughtIdx].slice(0, charIdx + 1)}_
-      </div>
+        >
+          {thoughts[thoughtIdx].slice(0, charIdx + 1)}_
+        </div>
+      </section>
+      <section className="greeting-namecard">
+        <h1>Aaron Parisi</h1>
+        <div
+          className="subtitles"
+          onMouseEnter={handleSubtitleMouseEnter}
+          onMouseLeave={handleSubtitleMouseLeave}
+        >
+          <animated.h2 style={springProps}>Web Developer </animated.h2>
+          <animated.h2 style={springProps} className="pronouns">
+            he / she / they
+          </animated.h2>
+        </div>
+      </section>
     </section>
   );
 };

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 
-import './App.css';
+import './stylesheets/reset.css';
+import './stylesheets/App.css';
 import DarkModeToggle from './components/DarkModeToggle';
 import Greeting from './components/Greeting';
 
@@ -28,9 +29,8 @@ function App() {
   };
 
   useEffect(() => {
-    document.body.classList.remove('bg-dark-bgPrimary');
-    document.body.classList.remove('bg-light-bgPrimary');
-    document.body.classList.add(`bg-${darkMode ? 'dark' : 'light'}-bgPrimary`);
+    document.documentElement.classList.remove('dark-mode');
+    if (darkMode) document.documentElement.classList.add('dark-mode');
   }, [darkMode]);
   useEffect(() => {
     const handleChange = (e: MediaQueryListEvent) => {
