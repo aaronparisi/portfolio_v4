@@ -10,8 +10,12 @@
   --color-rainbow-blue: #00aaff;
 }
 
+.greeting {
+  display: flex;
+}
+
 .self-taught {
-  width: 50vw;
+  flex-basis: 40%;
 
   color: transparent;
   background: linear-gradient(
@@ -29,7 +33,7 @@
     var(--color-rainbow-pink) 100%
   );
   background-clip: text;
-  /* -webkit-background-clip: text; */
+  -webkit-background-clip: text;
 
   font-size: 10rem;
   /* font-family: selfTaught; */
@@ -39,6 +43,18 @@
   background-size: 400% 100%;
   background-position: 0 0;
   animation: slide 3s linear 0.5s infinite;
+
+  transition: font-size 0.5s ease-in-out;
+}
+
+.deep-thought {
+  flex-basis: 60%;
+  color: lime;
+  font-family: 'Victor Mono', 'monospace';
+  font-size: 4rem;
+
+  display: flex;
+  align-items: center;
 }
 
 @keyframes slide {
@@ -47,5 +63,10 @@
   }
   100% {
     background-position: 115% 0;
+  }
+}
+
+@keyframes bobble {
+  0% {
   }
 }
