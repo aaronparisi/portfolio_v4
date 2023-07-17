@@ -1,22 +1,50 @@
-.dark-mode-toggle {
+.dark-mode-toggle-container {
   position: absolute;
   top: 0;
   right: 0;
 
+  margin: 1rem;
+}
+
+.dark-mode-toggle {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  margin: 1rem;
   padding: 8px;
 
+  background-color: var(--color-bg-primary);
+  background-clip: padding-box;
   border: 1px solid transparent;
   border-radius: 5px;
-  background-color: var(--color-bg-primary);
+
+  position: relative;
 }
 
 .dark-mode-toggle:hover {
-  border-color: var(--color-fg-primary);
   cursor: pointer;
-  background-color: var(--color-bg-secondary);
+}
+
+.dark-mode-toggle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  z-index: -1;
+
+  margin: -1px;
+  border-radius: 5px;
+  background: linear-gradient(
+    135deg,
+    var(--color-rainbow-pink) 0%,
+    var(--color-rainbow-orange) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+.dark-mode-toggle:hover::before {
+  opacity: 1;
 }
