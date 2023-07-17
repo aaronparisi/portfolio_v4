@@ -22,7 +22,7 @@ const DarkModeToggle = ({ darkMode, toggleDarkMode }) => {
   };
 
   const { r, transform, cy, cx, opacity } =
-    sunMoonProps[darkMode ? 'moon' : 'sun'];
+    sunMoonProps[darkMode ? 'sun' : 'moon'];
   const svgContainerProps = useSpring({
     transform,
     config: sunMoonProps.springConfig,
