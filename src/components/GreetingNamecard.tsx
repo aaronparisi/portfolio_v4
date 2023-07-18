@@ -18,9 +18,9 @@ const Namecard: React.FC<NamecardProps> = () => {
     headerTo = 'translate(0%, 0%)';
   } else if (teasing) {
     headerFrom = 'translate(0%, 0%)';
-    headerTo = 'translate(0%, 10%)';
+    headerTo = 'translate(0%, -115%)';
   } else if (hiding) {
-    headerFrom = 'translate(0%, 10%)';
+    headerFrom = 'translate(0%, -115%)';
     headerTo = 'translate(0%, 0%)';
   } else {
     headerFrom = 'translate(0%, 0%)';
@@ -39,7 +39,7 @@ const Namecard: React.FC<NamecardProps> = () => {
   const revealProps = useSpring({
     from: { transform: 'translateY(100%)' },
     to: { transform: 'translateY(0%)' },
-    delay: 3000,
+    delay: 3500,
     config: { mass: 1, friction: 15, tension: 170 },
   });
 
@@ -53,14 +53,15 @@ const Namecard: React.FC<NamecardProps> = () => {
   };
 
   // TODO this feels soooo hacky
+  // perhaps I can do this w conditional delays on spring
   useEffect(() => {
     setTimeout(() => {
       setTeasing(true);
       setTimeout(() => {
         setTeasing(false);
         setHiding(true);
-      }, 300);
-    }, 3500);
+      }, 900);
+    }, 4500);
   }, []);
 
   return (

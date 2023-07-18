@@ -2,7 +2,9 @@ import React from 'react';
 
 import Greeting from './Greeting';
 
-const Home = () => {
+interface HomeProps {}
+
+const Home: React.FC<HomeProps> = () => {
   return (
     <section className="home">
       <Greeting />

@@ -30,6 +30,11 @@
   --color-accent-secondary: #94bd21;
 }
 
+:root.reduced-motion * {
+  transition: none;
+  animation: none;
+}
+
 body {
   background-color: var(--color-bg-primary);
 }

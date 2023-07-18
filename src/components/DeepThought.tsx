@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { ReducedMotionContext } from '../App';
 
 interface DeepThoughtProps {}
 
 const DeepThought: React.FC<DeepThoughtProps> = () => {
-  const [charIdx, setCharIdx] = useState<number>(-1);
-  const [thoughtIdx, setThoughtIdx] = useState<number>(0);
-  const [typing, setTyping] = useState<boolean>(true);
-
-  const [blinking, setBlinking] = useState<boolean>(false);
+  // reduced motion
+  // const reducedMotion = useContext(ReducedMotionContext);
+  const reducedMotion = useContext(ReducedMotionContext);
 
   // typeing aniation stuff
   const thoughts: string[] = [
@@ -15,6 +14,12 @@ const DeepThought: React.FC<DeepThoughtProps> = () => {
     'Often distraught.',
     'Works a lot.',
   ];
+  const [charIdx, setCharIdx] = useState<number>(
+    reducedMotion ? thoughts[0].length : -1
+  );
+  const [thoughtIdx, setThoughtIdx] = useState<number>(0);
+  const [typing, setTyping] = useState<boolean>(true);
+
   const deleteChar = () => {
     if (charIdx <= -1) {
       setThoughtIdx((prev) => (prev + 1) % thoughts.length);
@@ -38,6 +43,8 @@ const DeepThought: React.FC<DeepThoughtProps> = () => {
     }
   };
   useEffect(() => {
+    if (reducedMotion) return;
+
     setTimeout(() => {
       if (typing) {
         typeChar();
@@ -45,15 +52,21 @@ const DeepThought: React.FC<DeepThoughtProps> = () => {
         deleteChar();
       }
     }, Math.floor(Math.random() * 50) + 20);
-  }, [typing, charIdx]);
+  }, [typing, charIdx, reducedMotion]);
 
+  // blinking cursor
+  const [blinking, setBlinking] = useState<boolean>(false);
   useEffect(() => {
+    if (reducedMotion) {
+      setBlinking(false);
+      return;
+    }
     const blink = setInterval(() => {
       setBlinking((prev) => !prev);
     }, 700);
 
     return () => clearInterval(blink);
-  }, []);
+  }, [reducedMotion]);
 
   return (
     <div

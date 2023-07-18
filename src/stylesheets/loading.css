@@ -17,6 +17,9 @@
 
   height: 7rem;
   width: 5rem;
+
+  opacity: 1;
+  transition: opacity 1s ease-in;
 }
 
 .loading-bar {
@@ -24,10 +27,7 @@
   height: 0.75rem;
 
   animation: bounce 2s ease-in-out infinite;
-  transform-origin: 50% 100%; /* TODO what is this for */
-
-  opacity: 1;
-  transition: opacity 1s ease-in;
+  transform-origin: 50% 100%;
 }
 
 .loading-bar:nth-of-type(1) {
@@ -49,8 +49,19 @@
   animation-delay: 300ms;
 }
 
-.loading-bar-container.loading-bar-container-fade .loading-bar {
+.loading-bar-container.loading-bar-container-fade {
   opacity: 0;
+  /* transform: scaleX(200); */
+  /* animation: expand 0.5s linear; */
+}
+
+@keyframes expand {
+  0% {
+    transform: scaleX(1);
+  }
+  100% {
+    transform: scaleX(200);
+  }
 }
 
 @keyframes bounce {

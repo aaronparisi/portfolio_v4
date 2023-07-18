@@ -21,7 +21,7 @@ const ToggleButtons: React.FC<ToggleButtonsProps> = ({
   const appearProps = useSpring({
     from: { transform: 'translateY(-90%)' },
     to: { transform: 'translateY(0%)' },
-    delay: 4000,
+    delay: 6000,
   });
 
   return (

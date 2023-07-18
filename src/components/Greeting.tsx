@@ -11,15 +11,10 @@ interface GreetingProps {}
 const Greeting: React.FC<GreetingProps> = () => {
   // TODO this feels hacky
   const [renderDeepThought, setRenderDeepThought] = useState<boolean>(false);
-  const [renderNamecard, setRenderNamecard] = useState<boolean>(false);
 
   useEffect(() => {
     setTimeout(() => {
       setRenderDeepThought(true);
-      setTimeout(() => {
-        console.log('setting render name card');
-        setRenderNamecard(true);
-      }, 1800);
     }, 1800);
   }, []);
 

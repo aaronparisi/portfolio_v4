@@ -14,8 +14,8 @@ const Loading: React.FC<LoadingProps> = ({ setIsLoaded }) => {
     setToFade(true);
     setTimeout(() => {
       setIsLoaded(true);
-    }, 2000);
-  }, 2500);
+    }, 1500);
+  }, 3500);
 
   return (
     <div className="loading">

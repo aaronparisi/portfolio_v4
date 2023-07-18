@@ -37,14 +37,15 @@ const getInitialMotionPreference = () => {
   }
 };
 
+export const ReducedMotionContext = React.createContext<boolean>(false);
+
 function App() {
-  const [darkMode, setDarkMode] = useState<boolean>(getInitialThemePreference);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+
+  // motion
   const [reducedMotion, setReducedMotion] = useState<boolean>(
     getInitialMotionPreference
   );
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-
-  // motion helpers
   const toggleReducedMotion = () => {
     Cookies.set('ap_reduced_motion', JSON.stringify(!reducedMotion));
     setReducedMotion((prev) => !prev);
@@ -68,7 +69,8 @@ function App() {
     };
   }, []);
 
-  // dark mode helpers
+  // dark mode
+  const [darkMode, setDarkMode] = useState<boolean>(getInitialThemePreference);
   const toggleDarkMode = () => {
     Cookies.set('ap_dark_mode', JSON.stringify(!darkMode));
     setDarkMode((prev) => !prev);
@@ -91,23 +93,25 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      {isLoaded ? (
-        <Router>
-          <ToggleButtons
-            toggleReducedMotion={toggleReducedMotion}
-            reducedMotion={reducedMotion}
-            toggleDarkMode={toggleDarkMode}
-            darkMode={darkMode}
-          />
-          <Routes>
-            <Route path="/" element={<Home />} />
-          </Routes>
-        </Router>
-      ) : (
-        <Loading setIsLoaded={setIsLoaded} />
-      )}
-    </div>
+    <ReducedMotionContext.Provider value={reducedMotion}>
+      <div className="App">
+        {isLoaded ? (
+          <Router>
+            <ToggleButtons
+              toggleReducedMotion={toggleReducedMotion}
+              reducedMotion={reducedMotion}
+              toggleDarkMode={toggleDarkMode}
+              darkMode={darkMode}
+            />
+            <Routes>
+              <Route path="/" element={<Home />} />
+            </Routes>
+          </Router>
+        ) : (
+          <Loading setIsLoaded={setIsLoaded} />
+        )}
+      </div>
+    </ReducedMotionContext.Provider>
   );
 }
 
