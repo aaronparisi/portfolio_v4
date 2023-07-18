@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import './stylesheets/reset.css';
 import './stylesheets/App.css';
 import DarkModeToggle from './components/DarkModeToggle';
-import Greeting from './components/Greeting';
+import Home from './components/Home';
 
 const getInitialDarkMode = () => {
   const storedDarkMode: string | undefined = Cookies.get('ap_dark_mode');
@@ -47,8 +48,12 @@ function App() {
 
   return (
     <div className="App">
-      <DarkModeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-      <Greeting darkMode={darkMode} />
+      <Router>
+        <DarkModeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
