@@ -6,6 +6,7 @@ import './stylesheets/reset.css';
 import './stylesheets/App.css';
 import Home from './components/Home';
 import ToggleButtons from './components/ToggleButtons';
+import Loading from './components/Loading';
 
 const getInitialThemePreference = () => {
   const storedDarkMode: string | undefined = Cookies.get('ap_dark_mode');
@@ -41,6 +42,7 @@ function App() {
   const [reducedMotion, setReducedMotion] = useState<boolean>(
     getInitialMotionPreference
   );
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   // motion helpers
   const toggleReducedMotion = () => {
@@ -90,17 +92,21 @@ function App() {
 
   return (
     <div className="App">
-      <Router>
-        <ToggleButtons
-          toggleReducedMotion={toggleReducedMotion}
-          reducedMotion={reducedMotion}
-          toggleDarkMode={toggleDarkMode}
-          darkMode={darkMode}
-        />
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
-      </Router>
+      {isLoaded ? (
+        <Router>
+          <ToggleButtons
+            toggleReducedMotion={toggleReducedMotion}
+            reducedMotion={reducedMotion}
+            toggleDarkMode={toggleDarkMode}
+            darkMode={darkMode}
+          />
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </Router>
+      ) : (
+        <Loading setIsLoaded={setIsLoaded} />
+      )}
     </div>
   );
 }

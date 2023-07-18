@@ -9,9 +9,18 @@ interface LoadingProps {
 const Loading: React.FC<LoadingProps> = ({ setIsLoaded }) => {
   setTimeout(() => {
     setIsLoaded(true);
-  }, 500); // TODO implement animation, timing
+  }, 2500); // TODO implement animation, timing
 
-  return <div className="loading">Loading...</div>;
+  return (
+    <div className="loading">
+      <div className="loading-bar-container">
+        <div className="loading-bar"></div>
+        <div className="loading-bar"></div>
+        <div className="loading-bar"></div>
+        <div className="loading-bar"></div>
+      </div>
+    </div>
+  );
 };
 
 export default Loading;
