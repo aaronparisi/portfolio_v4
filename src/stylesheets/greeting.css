@@ -84,8 +84,6 @@
 }
 
 .greeting-namecard {
-  opacity: 0;
-
   flex: 0 0 90%;
 
   display: flex;
@@ -100,10 +98,6 @@
   text-shadow: 0px 0px 0px var(--color-fg-primary),
     0px 0px 10px var(--color-rainbow-orange),
     0px 0px 15px var(--color-rainbow-pink);
-}
-
-.greeting-namecard-visible {
-  opacity: 1;
 }
 
 .subtitles {

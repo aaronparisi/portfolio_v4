@@ -4,10 +4,10 @@ import Cookies from 'js-cookie';
 
 import './stylesheets/reset.css';
 import './stylesheets/App.css';
-import DarkModeToggle from './components/DarkModeToggle';
 import Home from './components/Home';
+import ToggleButtons from './components/ToggleButtons';
 
-const getInitialDarkMode = () => {
+const getInitialThemePreference = () => {
   const storedDarkMode: string | undefined = Cookies.get('ap_dark_mode');
 
   if (storedDarkMode !== undefined) {
@@ -21,14 +21,56 @@ const getInitialDarkMode = () => {
     return false;
   }
 };
+const getInitialMotionPreference = () => {
+  const storedMotion: string | undefined = Cookies.get('ap_reduced_motion');
+
+  if (storedMotion !== undefined) {
+    return JSON.parse(storedMotion);
+  } else if (
+    window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
 function App() {
-  const [darkMode, setDarkMode] = useState<boolean>(getInitialDarkMode);
+  const [darkMode, setDarkMode] = useState<boolean>(getInitialThemePreference);
+  const [reducedMotion, setReducedMotion] = useState<boolean>(
+    getInitialMotionPreference
+  );
+
+  // motion helpers
+  const toggleReducedMotion = () => {
+    Cookies.set('ap_reduced_motion', JSON.stringify(!reducedMotion));
+    setReducedMotion((prev) => !prev);
+  };
+  useEffect(() => {
+    document.documentElement.classList.remove('reduced-motion');
+    if (reducedMotion) document.documentElement.classList.add('reduced-motion');
+  }, [reducedMotion]);
+  useEffect(() => {
+    const handleChange = (e: MediaQueryListEvent) => {
+      if (!Cookies.get('ap_reduced_motion')) setReducedMotion(e.matches);
+    };
+
+    const reducedMotionQuery = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    );
+    reducedMotionQuery.addEventListener('change', handleChange);
+
+    return () => {
+      reducedMotionQuery.removeEventListener('change', handleChange);
+    };
+  }, []);
+
+  // dark mode helpers
   const toggleDarkMode = () => {
     Cookies.set('ap_dark_mode', JSON.stringify(!darkMode));
     setDarkMode((prev) => !prev);
   };
-
   useEffect(() => {
     document.documentElement.classList.remove('dark-mode');
     if (darkMode) document.documentElement.classList.add('dark-mode');
@@ -49,7 +91,12 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <DarkModeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+        <ToggleButtons
+          toggleReducedMotion={toggleReducedMotion}
+          reducedMotion={reducedMotion}
+          toggleDarkMode={toggleDarkMode}
+          darkMode={darkMode}
+        />
         <Routes>
           <Route path="/" element={<Home />} />
         </Routes>

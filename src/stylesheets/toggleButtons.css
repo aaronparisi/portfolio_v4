@@ -1,0 +1,15 @@
+.toggle-buttons {
+  /* TODO feels odd to have this here */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1rem;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  padding: 1rem;
+  z-index: 999;
+}

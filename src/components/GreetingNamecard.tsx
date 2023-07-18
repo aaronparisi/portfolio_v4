@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 
-interface NamecardProps {
-  shouldRender: boolean;
-}
+interface NamecardProps {}
 
-const Namecard: React.FC<NamecardProps> = ({ shouldRender }) => {
+const Namecard: React.FC<NamecardProps> = () => {
   const [revealing, setRevealing] = useState<boolean>(false);
   const [concealing, setConcealing] = useState<boolean>(false);
   const [teasing, setTeasing] = useState<boolean>(false);
@@ -38,6 +36,13 @@ const Namecard: React.FC<NamecardProps> = ({ shouldRender }) => {
     config: { mass: 1, friction: 15, tension: 170 },
   });
 
+  const revealProps = useSpring({
+    from: { transform: 'translateY(100%)' },
+    to: { transform: 'translateY(0%)' },
+    delay: 3000,
+    config: { mass: 1, friction: 15, tension: 170 },
+  });
+
   const handleSubtitleMouseEnter = () => {
     setRevealing(true);
     setConcealing(false);
@@ -49,23 +54,17 @@ const Namecard: React.FC<NamecardProps> = ({ shouldRender }) => {
 
   // TODO this feels soooo hacky
   useEffect(() => {
-    if (shouldRender) {
+    setTimeout(() => {
+      setTeasing(true);
       setTimeout(() => {
-        setTeasing(true);
-        setTimeout(() => {
-          setTeasing(false);
-          setHiding(true);
-        }, 300);
-      }, 0);
-    }
-  }, [shouldRender]);
+        setTeasing(false);
+        setHiding(true);
+      }, 300);
+    }, 3500);
+  }, []);
 
   return (
-    <section
-      className={`greeting-namecard ${
-        shouldRender ? 'greeting-namecard-visible' : ''
-      }`}
-    >
+    <animated.section style={revealProps} className="greeting-namecard">
       <h1>Aaron Parisi</h1>
       <div
         className="subtitles"
@@ -77,7 +76,7 @@ const Namecard: React.FC<NamecardProps> = ({ shouldRender }) => {
           he / she / they
         </animated.h2>
       </div>
-    </section>
+    </animated.section>
   );
 };
 

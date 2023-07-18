@@ -29,7 +29,7 @@ const Greeting: React.FC<GreetingProps> = () => {
         <SelfTaught />
         {renderDeepThought ? <DeepThought /> : ''}
       </section>
-      <Namecard shouldRender={renderNamecard} />
+      <Namecard />
     </section>
   );
 };
