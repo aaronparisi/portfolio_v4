@@ -14,9 +14,7 @@ const DeepThought: React.FC<DeepThoughtProps> = () => {
     'Often distraught.',
     'Works a lot.',
   ];
-  const [charIdx, setCharIdx] = useState<number>(
-    reducedMotion ? thoughts[0].length : -1
-  );
+  const [charIdx, setCharIdx] = useState<number>(-1);
   const [thoughtIdx, setThoughtIdx] = useState<number>(0);
   const [typing, setTyping] = useState<boolean>(true);
 
@@ -53,6 +51,9 @@ const DeepThought: React.FC<DeepThoughtProps> = () => {
       }
     }, Math.floor(Math.random() * 50) + 20);
   }, [typing, charIdx, reducedMotion]);
+  useEffect(() => {
+    if (reducedMotion) setCharIdx(thoughts[thoughtIdx].length);
+  }, [reducedMotion]);
 
   // blinking cursor
   const [blinking, setBlinking] = useState<boolean>(false);
