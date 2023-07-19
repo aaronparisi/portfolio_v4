@@ -11,6 +11,8 @@
 }
 
 .self-taught {
+  border: 1px solid white;
+  padding: 0rem 2rem;
   z-index: 2;
 
   position: absolute;
@@ -46,7 +48,8 @@
 
   font-size: 7rem;
 
-  animation: zoom 0.5s ease-in, slide 5s linear 0.9s infinite;
+  /* animation: zoom 0.5s ease-in, slide 5s linear 0.9s infinite; */
+  animation: slide 5s linear 0.9s infinite;
 }
 
 :root.reduced-motion .self-taught {
@@ -166,18 +169,5 @@
   }
   100% {
     background-position: 115% 0;
-  }
-}
-
-@keyframes zoom {
-  0% {
-    font-size: 30rem;
-    transform: scale(20);
-    opacity: 0;
-  }
-  100% {
-    font-size: 6rem;
-    transform: scale(1);
-    opacity: 1;
   }
 }

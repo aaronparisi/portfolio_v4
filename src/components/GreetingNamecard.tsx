@@ -47,8 +47,6 @@ const Namecard: React.FC<NamecardProps> = () => {
     delay: 3500,
     config: { mass: 1, friction: 15, tension: 170 },
   });
-  console.log(headerProps);
-  console.log(revealProps);
 
   const handleSubtitleMouseEnter = () => {
     setRevealing(true);
