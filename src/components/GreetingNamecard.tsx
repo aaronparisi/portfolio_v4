@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
+import { ReducedMotionContext } from '../App';
 
 interface NamecardProps {}
 
 const Namecard: React.FC<NamecardProps> = () => {
+  const reducedMotion = useContext(ReducedMotionContext);
+
   const [revealing, setRevealing] = useState<boolean>(false);
   const [concealing, setConcealing] = useState<boolean>(false);
   const [teasing, setTeasing] = useState<boolean>(false);
   const [hiding, setHiding] = useState<boolean>(false);
 
   let headerFrom: string, headerTo: string;
+  let headerImmediate = reducedMotion;
   if (revealing) {
     headerFrom = 'translate(0%, 0%)';
     headerTo = 'translate(0%, -115%)';
@@ -33,6 +37,7 @@ const Namecard: React.FC<NamecardProps> = () => {
     to: {
       transform: headerTo,
     },
+    immediate: headerImmediate,
     config: { mass: 1, friction: 15, tension: 170 },
   });
 

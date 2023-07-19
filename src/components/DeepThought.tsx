@@ -4,8 +4,6 @@ import { ReducedMotionContext } from '../App';
 interface DeepThoughtProps {}
 
 const DeepThought: React.FC<DeepThoughtProps> = () => {
-  // reduced motion
-  // const reducedMotion = useContext(ReducedMotionContext);
   const reducedMotion = useContext(ReducedMotionContext);
 
   // typeing aniation stuff
