@@ -17,11 +17,7 @@
   align-items: center;
   justify-content: center;
   padding-right: 6px;
-  background: linear-gradient(
-    90deg,
-    var(--color-rainbow-pink) 0%,
-    var(--color-rainbow-yellow) 100%
-  );
+  background: linear-gradient(90deg, var(--color-rainbow-pink) 0%, gray 100%);
 }
 
 .toggle-switch-handle {

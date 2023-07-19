@@ -53,3 +53,32 @@ h2 {
   color: var(--color-fg-secondary);
   font-size: 3rem;
 }
+
+.button {
+  /* height: 2rem; */
+  /* width: 5rem; */
+  border: 1px solid white;
+  border-radius: 5px;
+  background: transparent;
+
+  color: var(--color-fg-primary);
+  font-size: 2rem;
+  font-family: 'Archivo Black', 'sans-serif';
+
+  margin: 0 auto;
+  text-align: center;
+  padding: 1%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.nav-button {
+  text-decoration: none;
+}

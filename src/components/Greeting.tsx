@@ -5,6 +5,7 @@ import '../stylesheets/greeting.css';
 import SelfTaught from './SelfTaught';
 import DeepThought from './DeepThought';
 import Namecard from './GreetingNamecard';
+import GreetingFooter from './GreetingFooter';
 
 interface GreetingProps {}
 
@@ -20,11 +21,11 @@ const Greeting: React.FC<GreetingProps> = () => {
 
   return (
     <section className="greeting">
-      <section className="greeting-taglines">
-        <SelfTaught />
-        {renderDeepThought ? <DeepThought /> : ''}
-      </section>
+      <SelfTaught />
+      {renderDeepThought ? <DeepThought /> : ''}
+
       <Namecard />
+      <GreetingFooter />
     </section>
   );
 };

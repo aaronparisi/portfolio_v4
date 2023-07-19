@@ -42,7 +42,7 @@ const Namecard: React.FC<NamecardProps> = () => {
   });
 
   const revealProps = useSpring({
-    from: { transform: 'translateY(100%)' },
+    from: { transform: 'translateY(150%)' },
     to: { transform: 'translateY(0%)' },
     delay: 3500,
     config: { mass: 1, friction: 15, tension: 170 },
