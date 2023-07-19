@@ -17,16 +17,13 @@
 
   height: 7rem;
   width: 5rem;
-
-  opacity: 1;
-  transition: opacity 1s ease-in;
 }
 
 .loading-bar {
   width: 0.75rem;
   height: 0.75rem;
 
-  animation: bounce 2s ease-in-out infinite;
+  /* animation: bounce 2s ease-in-out infinite; */
   transform-origin: 50% 100%;
 }
 
@@ -47,21 +44,6 @@
 .loading-bar:nth-of-type(4) {
   background-color: var(--color-rainbow-green);
   animation-delay: 300ms;
-}
-
-.loading-bar-container.loading-bar-container-fade {
-  opacity: 0;
-  /* transform: scaleX(200); */
-  /* animation: expand 0.5s linear; */
-}
-
-@keyframes expand {
-  0% {
-    transform: scaleX(1);
-  }
-  100% {
-    transform: scaleX(200);
-  }
 }
 
 @keyframes bounce {
