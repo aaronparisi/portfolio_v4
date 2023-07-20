@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useSpring, animated } from 'react-spring';
 import { ReducedMotionContext } from '../App';
 
 interface DeepThoughtProps {}
@@ -28,7 +29,7 @@ const DeepThought: React.FC<DeepThoughtProps> = () => {
     if (charIdx >= thoughts[thoughtIdx].length) {
       setTimeout(() => {
         setTyping(false);
-      }, 4000);
+      }, 5000);
     } else if (charIdx === -1) {
       // wait a sec
       setTimeout(() => {
@@ -54,18 +55,14 @@ const DeepThought: React.FC<DeepThoughtProps> = () => {
   }, [reducedMotion]);
 
   // blinking cursor
-  const [blinking, setBlinking] = useState<boolean>(false);
-  useEffect(() => {
-    if (reducedMotion) {
-      setBlinking(false);
-      return;
-    }
-    const blink = setInterval(() => {
-      setBlinking((prev) => !prev);
-    }, 700);
-
-    return () => clearInterval(blink);
-  }, [reducedMotion]);
+  const [blinkSpring, _] = useSpring(
+    () => ({
+      from: { transform: 'scaleY(1)' },
+      to: { transform: reducedMotion ? 'scaleY(1)' : 'scaleY(30)' },
+      loop: { reverse: true },
+    }),
+    [reducedMotion]
+  );
 
   return (
     <div
@@ -74,11 +71,9 @@ const DeepThought: React.FC<DeepThoughtProps> = () => {
         `}
     >
       {thoughts[thoughtIdx].slice(0, charIdx + 1)}
-      <span
-        className={`blinking-cursor ${
-          blinking ? 'blinking-cursor-blinking' : ''
-        }`}
-      ></span>
+      <span className="blinking-cursor">
+        <animated.div style={blinkSpring}></animated.div>
+      </span>
     </div>
   );
 };

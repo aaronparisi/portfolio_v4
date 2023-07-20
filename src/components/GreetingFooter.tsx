@@ -1,28 +1,32 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useSpring, animated } from 'react-spring';
+import { ReducedMotionContext } from '../App';
+import NavButton from './NavButton';
 
 interface GreetingFooterProps {}
 
 const GreetingFooter: React.FC<GreetingFooterProps> = () => {
-  const fadeSpring = useSpring({
-    from: {
-      transform: 'translateY(350%)',
-    },
-    to: {
-      transform: 'translateY(0%)',
-    },
-    delay: 6000,
-  });
+  const reducedMotion = useContext(ReducedMotionContext);
+
+  const [revealSpring, _] = useSpring(() => {
+    return {
+      from: {
+        transform: 'translateY(350%)',
+      },
+      to: {
+        transform: 'translateY(0%)',
+      },
+      delay: 6000,
+      immediate: reducedMotion,
+    };
+  }, [reducedMotion]);
+
   return (
-    <animated.section style={fadeSpring} className="greeting-footer">
-      <a
+    <animated.section style={revealSpring} className="greeting-footer">
+      <NavButton
         href="https://www.linkedin.com/in/aaron-parisi"
-        target="_blank"
-        rel="noreferrer"
-        className="button nav-button"
-      >
-        Connect!
-      </a>
+        content="Contact Me"
+      />
     </animated.section>
   );
 };

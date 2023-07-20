@@ -1,35 +1,40 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useSpring, animated } from 'react-spring';
+import { ReducedMotionContext } from '../App';
+
 import '../stylesheets/toggleButtons.css';
 
 import ReducedMotionToggle from './ReducedMotionToggle';
 import DarkModeToggle from './DarkModeToggle';
-import { useSpring, animated } from 'react-spring';
 
 interface ToggleButtonsProps {
   toggleReducedMotion: () => void;
-  reducedMotion: boolean;
   toggleDarkMode: () => void;
   darkMode: boolean;
 }
 
 const ToggleButtons: React.FC<ToggleButtonsProps> = ({
   toggleReducedMotion,
-  reducedMotion,
   toggleDarkMode,
   darkMode,
 }) => {
-  const appearProps = useSpring({
-    from: { transform: 'translateY(-90%)' },
-    to: { transform: 'translateY(0%)' },
-    delay: 6000,
-  });
+  const reducedMotion = useContext(ReducedMotionContext);
+  const [revealSpring, _] = useSpring(() => {
+    return {
+      from: {
+        transform: 'translateY(-90%)',
+      },
+      to: {
+        transform: 'translateY(0%)',
+      },
+      delay: 6000,
+      immediate: reducedMotion,
+    };
+  }, [reducedMotion]);
 
   return (
-    <animated.section className="toggle-buttons" style={appearProps}>
-      <ReducedMotionToggle
-        toggleReducedMotion={toggleReducedMotion}
-        reducedMotion={reducedMotion}
-      />
+    <animated.section className="toggle-buttons" style={revealSpring}>
+      <ReducedMotionToggle toggleReducedMotion={toggleReducedMotion} />
       <DarkModeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
     </animated.section>
   );

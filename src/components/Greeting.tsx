@@ -13,6 +13,7 @@ const Greeting: React.FC<GreetingProps> = () => {
   // TODO this feels hacky
   const [renderDeepThought, setRenderDeepThought] = useState<boolean>(false);
 
+  // TODO hacky?
   useEffect(() => {
     setTimeout(() => {
       setRenderDeepThought(true);

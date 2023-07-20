@@ -41,12 +41,15 @@ const Namecard: React.FC<NamecardProps> = () => {
     config: { mass: 1, friction: 15, tension: 170 },
   });
 
-  const revealProps = useSpring({
-    from: { transform: 'translateY(150%)' },
-    to: { transform: 'translateY(0%)' },
-    delay: 3500,
-    config: { mass: 1, friction: 15, tension: 170 },
-  });
+  const [revealProps, _] = useSpring(() => {
+    return {
+      from: { transform: 'translateY(150%)' },
+      to: { transform: 'translateY(0%)' },
+      delay: 3500,
+      config: { mass: 1, friction: 15, tension: 170 },
+      immediate: reducedMotion,
+    };
+  }, [reducedMotion]);
 
   const handleSubtitleMouseEnter = () => {
     setRevealing(true);

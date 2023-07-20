@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   useTransition,
   animated,
@@ -7,10 +7,13 @@ import {
   useSpring,
   useChain,
 } from 'react-spring';
+import { ReducedMotionContext } from '../App';
 
 interface SelfTaughtProps {}
 
 const SelfTaught: React.FC<SelfTaughtProps> = () => {
+  const reducedMotion = useContext(ReducedMotionContext);
+
   const entranceRef = useSpringRef();
   const entranceSpring = useTransition(['Self-taught'], {
     from: {
@@ -24,16 +27,19 @@ const SelfTaught: React.FC<SelfTaughtProps> = () => {
       opacity: 1,
     },
     config: { ...config.wobbly, clamp: true },
+    immediate: reducedMotion,
   });
 
   const swipeRef = useSpringRef();
-  const swipeSpring = useSpring({
-    from: { backgroundPosition: '0 0' },
-    to: { backgroundPosition: '115% 0' },
-    config: { duration: 2000 },
-    delay: 500,
-    loop: true,
-  });
+  const [swipeSpring, _] = useSpring(() => {
+    return {
+      from: { backgroundPosition: '0 0' },
+      to: { backgroundPosition: reducedMotion ? '0 0' : '115% 0' },
+      config: { duration: 2000 },
+      delay: 500,
+      loop: true,
+    };
+  }, [reducedMotion]);
 
   useChain([entranceRef, swipeRef]);
 

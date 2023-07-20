@@ -99,7 +99,6 @@ function App() {
           <Router>
             <ToggleButtons
               toggleReducedMotion={toggleReducedMotion}
-              reducedMotion={reducedMotion}
               toggleDarkMode={toggleDarkMode}
               darkMode={darkMode}
             />
