@@ -17,7 +17,7 @@ const Greeting: React.FC<GreetingProps> = () => {
   useEffect(() => {
     setTimeout(() => {
       setRenderDeepThought(true);
-    }, 1800);
+    }, 800);
   }, []);
 
   return (

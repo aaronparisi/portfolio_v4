@@ -45,7 +45,7 @@ const Namecard: React.FC<NamecardProps> = () => {
     return {
       from: { transform: 'translateY(150%)' },
       to: { transform: 'translateY(0%)' },
-      delay: 3500,
+      delay: 2000,
       config: { mass: 1, friction: 15, tension: 170 },
       immediate: reducedMotion,
     };
@@ -69,7 +69,7 @@ const Namecard: React.FC<NamecardProps> = () => {
         setTeasing(false);
         setHiding(true);
       }, 900);
-    }, 4500);
+    }, 2800);
   }, []);
 
   return (

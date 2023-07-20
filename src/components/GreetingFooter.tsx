@@ -16,7 +16,7 @@ const GreetingFooter: React.FC<GreetingFooterProps> = () => {
       to: {
         transform: 'translateY(0%)',
       },
-      delay: 6000,
+      delay: 4500,
       immediate: reducedMotion,
     };
   }, [reducedMotion]);

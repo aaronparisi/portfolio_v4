@@ -40,7 +40,6 @@ const Loading: React.FC<LoadingProps> = ({ setIsLoaded }) => {
 
   // NOTE this is simulated - we aren't waiting on any data etc.
   setTimeout(() => {
-    console.log('time to fade');
     setToFade(true);
     setTimeout(() => {
       setIsLoaded(true);
