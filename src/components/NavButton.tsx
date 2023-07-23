@@ -1,13 +1,21 @@
 import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { animated, useSpring, config } from 'react-spring';
-import { ReducedMotionContext } from '../App';
+import { ReducedMotionContext } from '../contexts/contexts';
 
 interface NavButtonProps {
   href: string;
   content: string;
+  newTab: boolean;
+  from: string;
 }
 
-const NavButton: React.FC<NavButtonProps> = ({ href, content }) => {
+const NavButton: React.FC<NavButtonProps> = ({
+  href,
+  content,
+  newTab,
+  from,
+}) => {
   const reducedMotion = useContext(ReducedMotionContext);
 
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -31,17 +39,16 @@ const NavButton: React.FC<NavButtonProps> = ({ href, content }) => {
   }, [isHovered, reducedMotion]);
 
   return (
-    <animated.a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
+    <animated.div
       className="button nav-button"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={hoverSpring}
     >
-      {content}
-    </animated.a>
+      <Link to={href} state={{ from: from }}>
+        {content}
+      </Link>
+    </animated.div>
   );
 };
 

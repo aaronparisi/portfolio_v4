@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useSpring, animated } from 'react-spring';
-import { ReducedMotionContext } from '../App';
+import { ReducedMotionContext } from '../contexts/contexts';
 
 interface DeepThoughtProps {}
 

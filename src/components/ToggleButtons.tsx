@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useSpring, animated } from 'react-spring';
-import { ReducedMotionContext } from '../App';
+import { ReducedMotionContext } from '../contexts/contexts';
 
 import '../stylesheets/toggleButtons.css';
 

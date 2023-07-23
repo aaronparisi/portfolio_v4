@@ -75,8 +75,6 @@
 .blinking-cursor {
   align-self: flex-end;
 
-  /* background-color: lime; */
-  background-color: var(--color-bg-primary);
   height: 4rem;
   width: 2rem;
 
@@ -168,6 +166,7 @@
 
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
+  gap: 1rem;
 }

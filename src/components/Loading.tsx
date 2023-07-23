@@ -1,20 +1,19 @@
-import React, { Dispatch, SetStateAction, useState, useContext } from 'react';
-import { config, animated, useTrail, useSpring } from 'react-spring';
-import { ReducedMotionContext } from '../App';
+import React, { useContext, useEffect } from 'react';
+import { config, animated, useTrail } from 'react-spring';
+import { ReducedMotionContext } from '../contexts/contexts';
 
 import '../stylesheets/loading.css';
 
 interface LoadingProps {
-  setIsLoaded: Dispatch<SetStateAction<boolean>>;
+  toFadeLoader: boolean;
+  onLoaderFade: () => void;
 }
 
-const Loading: React.FC<LoadingProps> = ({ setIsLoaded }) => {
+const Loading: React.FC<LoadingProps> = ({ toFadeLoader, onLoaderFade }) => {
   const reducedMotion = useContext(ReducedMotionContext);
 
-  const [toFade, setToFade] = useState<boolean>(false);
-
   let loadingFrom, loadingTo;
-  if (toFade && reducedMotion) {
+  if (toFadeLoader && reducedMotion) {
     loadingFrom = { opacity: 1 };
     loadingTo = { opacity: 0 };
   } else if (reducedMotion) {
@@ -22,7 +21,7 @@ const Loading: React.FC<LoadingProps> = ({ setIsLoaded }) => {
     // loadingTo = { opacity: 0 };
     loadingFrom = { scaleY: 1 }; // TODO don't love that it JUST sits there...
     loadingTo = { scaleY: 1 };
-  } else if (toFade) {
+  } else if (toFadeLoader) {
     loadingFrom = { scaleY: 1 };
     loadingTo = { scaleY: 0 };
   } else {
@@ -33,26 +32,23 @@ const Loading: React.FC<LoadingProps> = ({ setIsLoaded }) => {
     from: loadingFrom,
     to: loadingTo,
     config: config.wobbly,
-    loop: toFade ? false : { reverse: true },
+    loop: toFadeLoader ? false : { reverse: true },
     immediate: reducedMotion,
     delay: reducedMotion ? 1000 : 0,
   });
 
-  // NOTE this is simulated - we aren't waiting on any data etc.
-  setTimeout(() => {
-    setToFade(true);
-    setTimeout(() => {
-      setIsLoaded(true);
-    }, 1500);
-  }, 3500);
+  useEffect(() => {
+    if (toFadeLoader) {
+      console.log('fading loader now');
+      setTimeout(() => {
+        onLoaderFade();
+      }, 2000);
+    }
+  }, [toFadeLoader, onLoaderFade]);
 
   return (
     <div className="loading">
-      <div
-        className={`loading-bar-container ${
-          toFade ? 'loading-bar-container-fade' : ''
-        }`}
-      >
+      <div className={'loading-bar-container'}>
         {loadingSprings.map((spring, idx) => (
           <animated.div
             className="loading-bar"

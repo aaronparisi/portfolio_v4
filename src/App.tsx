@@ -2,60 +2,45 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
+import { ReducedMotionContext, VisitedPagesContext } from './contexts/contexts';
+import {
+  getInitialThemePreference,
+  getInitialMotionPreference,
+} from './utils/userPreferencesUtils';
+
 import './stylesheets/reset.css';
 import './stylesheets/App.css';
-import Home from './components/Home';
+
 import ToggleButtons from './components/ToggleButtons';
-import Loading from './components/Loading';
-
-const getInitialThemePreference = () => {
-  const storedDarkMode: string | undefined = Cookies.get('ap_dark_mode');
-
-  if (storedDarkMode !== undefined) {
-    return JSON.parse(storedDarkMode);
-  } else if (
-    window.matchMedia &&
-    window.matchMedia('(prefers-color-scheme: dark)').matches
-  ) {
-    return true;
-  } else {
-    return false;
-  }
-};
-const getInitialMotionPreference = () => {
-  const storedMotion: string | undefined = Cookies.get('ap_reduced_motion');
-
-  if (storedMotion !== undefined) {
-    return JSON.parse(storedMotion);
-  } else if (
-    window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-export const ReducedMotionContext = React.createContext<boolean>(false);
+import Greeting from './components/Greeting';
+import About from './components/About';
 
 function App() {
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  // visited pages
+  const [visitedPages, setVisitedPages] = useState<Set<string>>(
+    new Set<string>([])
+  );
+  const addVisitedPage = (page: string) => {
+    setVisitedPages((prev) => new Set<string>(prev).add(page));
+  };
 
   // motion
   const [reducedMotion, setReducedMotion] = useState<boolean>(
     getInitialMotionPreference
   );
   const toggleReducedMotion = () => {
+    // respond to clicks on toggle switch
     Cookies.set('ap_reduced_motion', JSON.stringify(!reducedMotion));
     setReducedMotion((prev) => !prev);
   };
   useEffect(() => {
+    // respond to chnages in reducedMotion global state
     document.documentElement.classList.remove('reduced-motion');
     if (reducedMotion) document.documentElement.classList.add('reduced-motion');
   }, [reducedMotion]);
   useEffect(() => {
     const handleChange = (e: MediaQueryListEvent) => {
+      // respond to changes in user preferences
       if (!Cookies.get('ap_reduced_motion')) setReducedMotion(e.matches);
     };
 
@@ -92,10 +77,15 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    console.log('hello from App.  visitedPages: ', visitedPages);
+  });
   return (
     <ReducedMotionContext.Provider value={reducedMotion}>
-      <div className="App">
-        {isLoaded ? (
+      <VisitedPagesContext.Provider
+        value={{ visitedPages: visitedPages, addVisitedPage: addVisitedPage }}
+      >
+        <div className="App">
           <Router>
             <ToggleButtons
               toggleReducedMotion={toggleReducedMotion}
@@ -103,13 +93,12 @@ function App() {
               darkMode={darkMode}
             />
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Greeting />} />
+              <Route path="/about" element={<About />} />
             </Routes>
           </Router>
-        ) : (
-          <Loading setIsLoaded={setIsLoaded} />
-        )}
-      </div>
+        </div>
+      </VisitedPagesContext.Provider>
     </ReducedMotionContext.Provider>
   );
 }

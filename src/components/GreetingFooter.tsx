@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useSpring, animated } from 'react-spring';
-import { ReducedMotionContext } from '../App';
+import { ReducedMotionContext } from '../contexts/contexts';
 import NavButton from './NavButton';
 
 interface GreetingFooterProps {}
@@ -26,6 +26,14 @@ const GreetingFooter: React.FC<GreetingFooterProps> = () => {
       <NavButton
         href="https://www.linkedin.com/in/aaron-parisi"
         content="Contact Me"
+        newTab={true}
+        from={'greeting'}
+      />
+      <NavButton
+        href="/about"
+        newTab={false}
+        content="About Me"
+        from={'greeting'}
       />
     </animated.section>
   );

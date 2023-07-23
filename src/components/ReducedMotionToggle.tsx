@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { animated, config, useSpring } from 'react-spring';
 import '../stylesheets/reducedMotion.css';
 
-import { ReducedMotionContext } from '../App';
+import { ReducedMotionContext } from '../contexts/contexts';
 
 interface ReducedMotionToggleProps {
   toggleReducedMotion: () => void;

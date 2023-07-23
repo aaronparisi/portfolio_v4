@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
-import { ReducedMotionContext } from '../App';
+import { ReducedMotionContext } from '../contexts/contexts';
 
 interface NamecardProps {}
 
@@ -30,7 +30,7 @@ const Namecard: React.FC<NamecardProps> = () => {
     headerFrom = 'translate(0%, 0%)';
     headerTo = 'translate(0%, 0%)';
   }
-  const headerProps = useSpring({
+  const subtitleSpring = useSpring({
     from: {
       transform: headerFrom,
     },
@@ -41,7 +41,7 @@ const Namecard: React.FC<NamecardProps> = () => {
     config: { mass: 1, friction: 15, tension: 170 },
   });
 
-  const [revealProps, _] = useSpring(() => {
+  const [titleRevealSpring, _] = useSpring(() => {
     return {
       from: { transform: 'translateY(150%)' },
       to: { transform: 'translateY(0%)' },
@@ -73,15 +73,15 @@ const Namecard: React.FC<NamecardProps> = () => {
   }, []);
 
   return (
-    <animated.section style={revealProps} className="greeting-namecard">
+    <animated.section style={titleRevealSpring} className="greeting-namecard">
       <h1>Aaron Parisi</h1>
       <div
         className="subtitles"
         onMouseEnter={handleSubtitleMouseEnter}
         onMouseLeave={handleSubtitleMouseLeave}
       >
-        <animated.h2 style={headerProps}>Web Developer </animated.h2>
-        <animated.h2 style={headerProps} className="pronouns">
+        <animated.h2 style={subtitleSpring}>Web Developer </animated.h2>
+        <animated.h2 style={subtitleSpring} className="pronouns">
           he / she / they
         </animated.h2>
       </div>

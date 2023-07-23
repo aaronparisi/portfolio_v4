@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   useTransition,
   animated,
@@ -7,11 +7,13 @@ import {
   useSpring,
   useChain,
 } from 'react-spring';
-import { ReducedMotionContext } from '../App';
+import { ReducedMotionContext } from '../contexts/contexts';
 
-interface SelfTaughtProps {}
+interface SelfTaughtProps {
+  onComplete: () => void;
+}
 
-const SelfTaught: React.FC<SelfTaughtProps> = () => {
+const SelfTaught: React.FC<SelfTaughtProps> = ({ onComplete }) => {
   const reducedMotion = useContext(ReducedMotionContext);
 
   const entranceRef = useSpringRef();
@@ -36,14 +38,20 @@ const SelfTaught: React.FC<SelfTaughtProps> = () => {
       from: { backgroundPosition: '0 0' },
       to: { backgroundPosition: reducedMotion ? '0 0' : '115% 0' },
       config: { duration: 2000 },
-      delay: 500,
+      delay: 500, // TODO I thought useChain was supposed to take care of delay
       loop: true,
     };
   }, [reducedMotion]);
 
   useChain([entranceRef, swipeRef]);
 
-  // return <div className="self-taught">Self-taught.</div>;
+  // TODO this is hacky.  See if I can key in on "the first onRest" of swipeSpring
+  useEffect(() => {
+    setTimeout(() => {
+      onComplete();
+    }, 1000);
+  }, []);
+
   return entranceSpring((style, item) => (
     <animated.div style={style} className="self-taught">
       {<animated.h2 style={swipeSpring}>{item}</animated.h2>}
