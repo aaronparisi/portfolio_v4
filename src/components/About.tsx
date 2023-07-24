@@ -1,22 +1,41 @@
-import React, { useContext, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { config, useTrail } from 'react-spring';
+import '../stylesheets/about.css';
 
-import { VisitedPagesContext } from '../contexts/contexts';
+import { ReducedMotionContext } from '../contexts/contexts';
+
+import Prompt from './Prompt';
 
 interface AboutProps {}
 
 const About: React.FC<AboutProps> = () => {
-  // visited pages
-  const location = useLocation();
-  const { visitedPages, addVisitedPage } = useContext(VisitedPagesContext);
-  useEffect(() => {
-    console.log('inside About; checking for previous page');
-    if (location.state) {
-      addVisitedPage(location.state.from);
-    }
-  }, []); // TODO deps
+  const reducedMotion = useContext(ReducedMotionContext);
+  const prompts: { question: string; answer: string }[] = [
+    { question: "Why I'm a great hire", answer: 'because...' },
+    { question: "What I'm good at", answer: 'because...' },
+    { question: 'What needs improvement', answer: 'because...' },
+    { question: 'Where I came from', answer: 'because...' },
+    { question: 'Why this career path', answer: 'because...' },
+  ];
 
-  return <div>Hello from about</div>;
+  // page load
+  const loadingSprings = useTrail(prompts.length, {
+    from: { opacity: 1, transform: 'translateY(50%)' },
+    to: { opacity: 1, transform: 'translateY(0%)' },
+    config: config.wobbly,
+    immediate: reducedMotion,
+  });
+
+  return (
+    <div className="about">
+      <h1>About Me</h1>
+      <section className="about-prompts-container">
+        {loadingSprings.map((spring, idx) => (
+          <Prompt prompt={prompts[idx]} key={idx} spring={spring}></Prompt>
+        ))}
+      </section>
+    </div>
+  );
 };
 
 export default About;
