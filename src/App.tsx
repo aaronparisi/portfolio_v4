@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
-import { ReducedMotionContext, VisitedPagesContext } from './contexts/contexts';
+import {
+  ReducedMotionContext,
+  VisitedPagesContext,
+  LoadingScreenContext,
+} from './contexts/contexts';
 import {
   getInitialThemePreference,
   getInitialMotionPreference,
@@ -14,6 +18,7 @@ import './stylesheets/App.css';
 import ToggleButtons from './components/ToggleButtons';
 import Greeting from './components/Greeting';
 import About from './components/About';
+import Loading from './components/Loading';
 
 function App() {
   // visited pages
@@ -77,29 +82,56 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
-    console.log('hello from App.  visitedPages: ', visitedPages);
-  });
+  // loading
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hasHadInitialLoad, setHasHadInitialLoad] = useState<boolean>(false);
+  const [toFadeLoader, setToFadeLoader] = useState<boolean>(false);
+  const onLoaderFade = () => {
+    setTimeout(() => {
+      // TODO: this fn gets called from <Loader /> component spring's onRest
+      //       but the loader is still bouncing when onRest is executed
+      //       Find out if that is expected behavior
+      setHasHadInitialLoad(true); // TODO happens every time...
+      setIsLoading(false);
+    }, 1000);
+  };
+  const onLoadComplete = () => setToFadeLoader(true);
+  const onLoadBegin = () => {
+    setIsLoading(true);
+  };
+
   return (
-    <ReducedMotionContext.Provider value={reducedMotion}>
-      <VisitedPagesContext.Provider
-        value={{ visitedPages: visitedPages, addVisitedPage: addVisitedPage }}
-      >
-        <div className="App">
-          <Router>
+    <div className="App">
+      <ReducedMotionContext.Provider value={reducedMotion}>
+        <VisitedPagesContext.Provider
+          value={{ visitedPages: visitedPages, addVisitedPage: addVisitedPage }}
+        >
+          <LoadingScreenContext.Provider
+            value={{
+              onLoadBegin: onLoadBegin,
+              onLoadComplete: onLoadComplete,
+              hasHadInitialLoad: hasHadInitialLoad,
+            }}
+          >
             <ToggleButtons
               toggleReducedMotion={toggleReducedMotion}
               toggleDarkMode={toggleDarkMode}
               darkMode={darkMode}
             />
-            <Routes>
-              <Route path="/" element={<Greeting />} />
-              <Route path="/about" element={<About />} />
-            </Routes>
-          </Router>
-        </div>
-      </VisitedPagesContext.Provider>
-    </ReducedMotionContext.Provider>
+            {isLoading ? (
+              <Loading toFade={toFadeLoader} onFade={onLoaderFade} />
+            ) : (
+              <Router>
+                <Routes>
+                  <Route path="/" element={<Greeting />} />
+                  <Route path="/about" element={<About />} />
+                </Routes>
+              </Router>
+            )}
+          </LoadingScreenContext.Provider>
+        </VisitedPagesContext.Provider>
+      </ReducedMotionContext.Provider>
+    </div>
   );
 }
 

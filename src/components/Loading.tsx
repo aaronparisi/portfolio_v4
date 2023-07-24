@@ -5,23 +5,21 @@ import { ReducedMotionContext } from '../contexts/contexts';
 import '../stylesheets/loading.css';
 
 interface LoadingProps {
-  toFadeLoader: boolean;
-  onLoaderFade: () => void;
+  toFade: boolean;
+  onFade: () => void;
 }
 
-const Loading: React.FC<LoadingProps> = ({ toFadeLoader, onLoaderFade }) => {
+const Loading: React.FC<LoadingProps> = ({ toFade, onFade }) => {
   const reducedMotion = useContext(ReducedMotionContext);
 
   let loadingFrom, loadingTo;
-  if (toFadeLoader && reducedMotion) {
+  if (toFade && reducedMotion) {
     loadingFrom = { opacity: 1 };
     loadingTo = { opacity: 0 };
   } else if (reducedMotion) {
-    // loadingFrom = { opacity: 1 };  // NOTE this messed something up idk why
-    // loadingTo = { opacity: 0 };
     loadingFrom = { scaleY: 1 }; // TODO don't love that it JUST sits there...
     loadingTo = { scaleY: 1 };
-  } else if (toFadeLoader) {
+  } else if (toFade) {
     loadingFrom = { scaleY: 1 };
     loadingTo = { scaleY: 0 };
   } else {
@@ -32,19 +30,11 @@ const Loading: React.FC<LoadingProps> = ({ toFadeLoader, onLoaderFade }) => {
     from: loadingFrom,
     to: loadingTo,
     config: config.wobbly,
-    loop: toFadeLoader ? false : { reverse: true },
+    loop: toFade ? false : { reverse: true },
     immediate: reducedMotion,
     delay: reducedMotion ? 1000 : 0,
+    onRest: toFade ? onFade : () => {},
   });
-
-  useEffect(() => {
-    if (toFadeLoader) {
-      console.log('fading loader now');
-      setTimeout(() => {
-        onLoaderFade();
-      }, 2000);
-    }
-  }, [toFadeLoader, onLoaderFade]);
 
   return (
     <div className="loading">
