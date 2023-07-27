@@ -14,7 +14,7 @@ const About: React.FC<AboutProps> = () => {
     { question: "Why I'm a great hire", answer: 'because...' },
     { question: "What I'm good at", answer: 'because...' },
     { question: 'What needs improvement', answer: 'because...' },
-    { question: 'Where I came from', answer: 'because...' },
+    { question: 'How I got here', answer: 'because...' },
     { question: 'Why this career path', answer: 'because...' },
   ];
 

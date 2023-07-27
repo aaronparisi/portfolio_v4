@@ -9,9 +9,9 @@ interface PromptProps {
 
 const Prompt: React.FC<PromptProps> = ({ prompt, spring }) => {
   return (
-    <animated.div className="prompt" style={spring}>
+    <animated.button className="prompt button" style={spring}>
       <h2>{prompt.question}</h2>
-    </animated.div>
+    </animated.button>
   );
 };
 

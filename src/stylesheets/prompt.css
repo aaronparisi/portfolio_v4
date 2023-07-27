@@ -1,16 +1,19 @@
 .prompt {
-  flex: 1 0 45%;
+  flex: 0 1 45%;
   height: 5rem;
 
-  border: 1px solid var(--color-fg-secondary);
-  padding: 0.5rem;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   word-wrap: normal;
+
+  background-color: var(--color-bg-primary);
 }
 
 .prompt h2 {
   font-size: clamp(1rem, 3vw, 3rem);
+  color: var(--color-fg-primary);
+}
+
+.prompt:hover {
+  box-shadow: none;
+  flex-basis: 46%;
+  height: 5.1rem;
 }
