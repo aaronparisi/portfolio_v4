@@ -29,6 +29,12 @@ const GreetingFooter: React.FC<GreetingFooterProps> = () => {
         newTab={true}
         from={'greeting'}
       />
+      <NavButton
+        href="/about"
+        newTab={false}
+        content="About Me"
+        from={'greeting'}
+      />
     </animated.section>
   );
 };
